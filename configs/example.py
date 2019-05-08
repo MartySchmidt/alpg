@@ -22,7 +22,7 @@
 #This is an example configuration file!
 
 # Select the output writer
-import writer as writer
+import csv_writer as writer
 
 #Random seed
 seed = 42

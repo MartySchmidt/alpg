@@ -29,7 +29,7 @@ from astral import Astral
 import profilegentools
 
 ## Please select your output writer of preference
-import writer as writer
+import csv_writer as writer
 #import trianawriter as writer
 
 #Random seed
