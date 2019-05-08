@@ -58,7 +58,7 @@ def createFile(fname):
         open(outputFolder+'/'+fname, 'a').close()
 
 # Function to create empty files to ensure that certain software doesn't crash for lack of files
-def createEmptyFiles():
+def init_writer():
 	createFile('Electricity_Profile.csv')
 	createFile('Electricity_Profile_GroupOther.csv')
 	createFile('Electricity_Profile_GroupInductive.csv')

@@ -104,7 +104,7 @@ if config.penetrationHeatPump + config.penetrationCHP > 100:
 random.seed(config.seed)
 
 # Create empty files
-config.writer.createEmptyFiles()
+config.writer.init_writer()
 
 #import neighbourhood
 import neighbourhood
