@@ -22,7 +22,7 @@ import sys, getopt, importlib, random
 folder = 'output/output/'
 
 cfgOutputDir = 'output/output/'
-outputFolder = cfgOutputDir
+OUTPUTFOLDER = cfgOutputDir
 cfgFile = None
 
 #Parse arguments
@@ -33,5 +33,5 @@ for opt, arg in opts:
 	elif opt in ("-o", "--output"):
 		cfgOutputDir = 'output/'+arg+'/'
 
-outputFolder = cfgOutputDir		
+OUTPUTFOLDER = cfgOutputDir		
 sys.path.insert(0, 'configs')

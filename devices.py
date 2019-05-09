@@ -456,7 +456,7 @@ class DeviceWashingMachine(TimeShiftableDevice):
 		self.name = "WashingMachine"
 			
 	def writeDevice(self, hnum):
-		config.writer.writeDeviceTimeshiftable(self, hnum)
+		config.writer.write_device_timeshiftable(self, hnum)
 		
 			
 class DeviceDishwasher(TimeShiftableDevice):
@@ -500,7 +500,7 @@ class DeviceDishwasher(TimeShiftableDevice):
 		self.name = "Dishwasher"
 			
 	def writeDevice(self, hnum):
-		config.writer.writeDeviceTimeshiftable(self, hnum)	
+		config.writer.write_device_timeshiftable(self, hnum)	
 			
 class DeviceElectricalVehicle(BufferTimeshiftableDevice):
 	def simulate(self, day, person, eventStart, eventDuration):
@@ -551,6 +551,6 @@ class DeviceElectricalVehicle(BufferTimeshiftableDevice):
 			assert(self.EndTimes[-1] > 	(self.StartTimes[-1]))
 				
 	def writeDevice(self, hnum):
-		config.writer.writeDeviceBufferTimeshiftable(self, hnum)	
+		config.writer.write_device_buffer_timeshiftable(self, hnum)	
 		
 

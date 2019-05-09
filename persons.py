@@ -16,10 +16,13 @@
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     
-
-from configLoader import *
-config = importlib.import_module(cfgFile)
+import random
 import profilegentools
+import importlib
+
+from configLoader import cfgFile
+config = importlib.import_module(cfgFile)
+		
 
 class Person:		
 	def __init__(self, age):

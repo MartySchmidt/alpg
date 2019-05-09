@@ -22,7 +22,9 @@
 #This is an example configuration file!
 
 # Select the output writer
-import csv_writer as writer
+from cached_writer import CachedWriter as Writer
+
+writer = Writer()
 
 #Random seed
 seed = 42
@@ -139,29 +141,32 @@ personWeekendActivityChanceMin = 	20 	#percentage
 personWeekendActivityChanceMax = 	30 	#percentage
 
 
+def get_households():
 
-householdList = []
+    householdList = []
 
-#Select the types of households
-import households
+    #Select the types of households
+    import households
 
-for i in range(0,2):
-	householdList.append(households.HouseholdSingleWorker())
+    for i in range(0,2):
+        householdList.append(households.HouseholdSingleWorker())
 
-for i in range(0,20):
-	householdList.append(households.HouseholdSingleRetired())
+    for i in range(0,20):
+        householdList.append(households.HouseholdSingleRetired())
 
-for i in range(0,6):
-	householdList.append(households.HouseholdDualWorker(True))
+    for i in range(0,6):
+        householdList.append(households.HouseholdDualWorker(True))
 
-for i in range(0,6):
-	householdList.append(households.HouseholdDualWorker(False))
+    for i in range(0,6):
+        householdList.append(households.HouseholdDualWorker(False))
 
-for i in range(0,16):
-	householdList.append(households.HouseholdDualRetired())
+    for i in range(0,16):
+        householdList.append(households.HouseholdDualRetired())
 
-for i in range(0,20):
-	householdList.append(households.HouseholdFamilyDualWorker(True))
+    for i in range(0,20):
+        householdList.append(households.HouseholdFamilyDualWorker(True))
 
-for i in range(0,10):
-	householdList.append(households.HouseholdFamilyDualWorker(False))
+    for i in range(0,10):
+        householdList.append(households.HouseholdFamilyDualWorker(False))
+
+    return householdList

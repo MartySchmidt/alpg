@@ -15,17 +15,17 @@
     #You should have received a copy of the GNU General Public License
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-    
-
-from configLoader import *
-config = importlib.import_module(cfgFile)
-
-import math, copy
+import math
+import copy
 import profilegentools
 import persons
 import devices
 import heatdemand
+import random
+import importlib
 
+from configLoader import cfgFile
+config = importlib.import_module(cfgFile)
 
 class Household:
 	#Note to self, must simulate whole household at once!
@@ -396,7 +396,7 @@ class Household:
 
 	def saveToFile(self, num):
 		text = []
-		config.writer.writeHousehold(self, num)
+		config.writer.write_household(self, num)
 		
 		
 

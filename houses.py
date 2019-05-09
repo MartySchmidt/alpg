@@ -16,11 +16,12 @@
     #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
-from configLoader import *
-config = importlib.import_module(cfgFile)
-
+import random
 import profilegentools
+import importlib
+
+from configLoader import cfgFile
+config = importlib.import_module(cfgFile)
 		
 class House:
 	#In the end we need to define houses as well with their orientation
