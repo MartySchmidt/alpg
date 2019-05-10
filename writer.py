@@ -111,7 +111,7 @@ class Writer:
 	def flush_writer(self):
 		for fname, ds in self.datasets.items():
 			df = pd.DataFrame(ds)
-			df.to_csv(OUTPUTFOLDER+'/'+fname, index=False)
+			df.to_csv(OUTPUTFOLDER+'/'+fname, index=False, header=False)
 		
 
 	def write_neighbourhood(self, num):
