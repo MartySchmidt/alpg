@@ -19,8 +19,6 @@
 import sys, getopt, importlib, random
 
 # Default write into a new folder
-folder = 'output/output/'
-
 cfgOutputDir = 'output/output/'
 OUTPUTFOLDER = cfgOutputDir
 cfgFile = None

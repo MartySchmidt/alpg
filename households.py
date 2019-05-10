@@ -38,6 +38,10 @@ class Household:
 		self.generate()
 		
 	def generate(self):
+
+		#Generates random seet for each household to be used in the multiprocessing simulator.
+		self.seed = random.randint(0, 2**32)
+
 		#The Yearly consumption is the normal consumption of domestic appliances as found for years in households. This excludes: 
 		#																										   (PH)EV, Heat Pump, PV
 		self.ConsumptionYearly		= profilegentools.gaussMinMax(3500,500) #kWh
@@ -142,7 +146,6 @@ class Household:
 		self.House = house
 		
 	def scaleProfile(self):
-		totalShare = 0
 		self.Consumption['Other'] = self.consumptionFactor['Other']
 		self.Consumption['Inductive'] = self.consumptionFactor['Inductive']
 		self.Consumption['Fridges'] = self.consumptionFactor['Fridges']
@@ -264,13 +267,13 @@ class Household:
 				self.OccupancyPerson[p] = schedulePerson
 			
 			#Activities for the whole family
-			eventDuration = 0;
-			eventStart = 0;
+			eventDuration = 0
+			eventStart = 0
 			if (day%7==0 or day%7==6) and random.random() < self.familyActivites:
 				#Only on Sundays we will have outings
 				#see whether it takes whole day or just a visit to other family members
 				#Notice that for now there is no relation between the individual family members and this outing!
-				eventDuration = 0;
+				eventDuration = 0
 				if(random.random() < 0.2):
 					#Long event
 					eventDuration = random.randint(6*60,9*60)
@@ -293,9 +296,9 @@ class Household:
 
 			#Select cooking time
 			cookingTime = random.randint(17*60,19.5*60)
-			startCooking = cookingTime;
+			startCooking = cookingTime
 			cookingDuration = 0
-			count = 0;
+			count = 0
 			while self.OccupancyPersonsDay[startCooking] == 0 and count != 100:
 				startCooking = random.randint(17*60,19.5*60)
 				count += 1
@@ -395,7 +398,6 @@ class Household:
 
 
 	def saveToFile(self, num):
-		text = []
 		config.writer.write_household(self, num)
 		
 		
@@ -403,7 +405,7 @@ class Household:
 class HouseholdSingleWorker(Household):
 	def __init__(self):
 		self.generate()
-		self.ConsumptionYearly		= profilegentools.gaussMinMax(2010,400)*config.consumptionFactor #kWh http://www.nibud.nl/uitgaven/huishouden/gas-elektriciteit-en-water.html
+		self.ConsumptionYearly = profilegentools.gaussMinMax(2010,400)*config.consumptionFactor #kWh http://www.nibud.nl/uitgaven/huishouden/gas-elektriciteit-en-water.html
 		
 		self.Persons = [ persons.PersonWorker(random.randint(26,65))]
 		

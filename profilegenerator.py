@@ -20,11 +20,9 @@
 
 if __name__ == "__main__":
 		
-
-
-	import os, sys, getopt
-	import time
-	start = time.time()
+	import os
+	import sys
+	import getopt
 
 	print("Profilegenerator 1.3.1\n")
 	print("Copyright (C) 2019 Gerwin Hoogsteen")
@@ -72,9 +70,6 @@ if __name__ == "__main__":
 			else:
 				print("Config directory is not empty! Provide the --force flag to delete the contents")
 				exit()
-				
-				
-
 
 	else:
 		print("Usage:")
@@ -82,14 +77,21 @@ if __name__ == "__main__":
 		exit()
 
 
-
+	import random
+	import importlib
 	import profilegentools
-	from configLoader import *
+	import neighbourhood
+	import worker as worker
+	from multiprocessing import Pool, cpu_count
+	from configLoader import cfgFile
+	
 	config = importlib.import_module(cfgFile)
 
+	# Randomize using the seed
+	random.seed(config.seed)
 
+	# Generate the households
 	householdList = config.get_households()
-
 
 	print('Loading config: '+cfgFile)
 	print("The current config will create and simulate "+str(len(householdList))+" households")
@@ -107,41 +109,32 @@ if __name__ == "__main__":
 		print("Error, the combined penetration of heatpumps and CHPs exceed 100!")
 		exit()
 
-
-
-	# Randomize using the seed
-	random.seed(config.seed)
-
 	# Create empty files
 	config.writer.init_writer()
 
-	#import neighbourhood
-	import neighbourhood
+	# Create neighbourhood
 	neighbourhood.neighbourhood(householdList)
 
+	print("Starting household simulation...")
 
+	# Create pool of workers
+	number_of_workers = cpu_count() if config.processes is None else config.processes
+	p = Pool(number_of_workers, worker.init_worker)
 
-	print("Starting household simulations...")
+	try:
+		for (hnum, household) in p.imap(worker.simulate_household, enumerate(householdList)):
+			config.writer.write_household(household, hnum)
+			config.writer.write_neighbourhood(hnum)
+		
+		p.terminate()
 
-	from multiprocessing import Pool, cpu_count
-	from simulator import simulate_household
+	except KeyboardInterrupt:
+		p.terminate()
+		print("Simulation terminated!")
+		sys.exit(1)
 
-	p = Pool(cpu_count())
-	for (hnum, household) in p.imap_unordered(simulate_household, enumerate(householdList)):
-		config.writer.write_household(household, hnum)
-		config.writer.write_neighbourhood(hnum)
-
-		# optimize memory
-		household.Consumption = None
-		household.Occupancy = None
-		print("Written household "+str(hnum))
-
-	p.terminate()
 
 	print("Flushing writer.")
-
 	config.writer.flush_writer()
 
-	print("Household simulations done.")
-	end = time.time()
-	print(end - start)
+	print("Simulation done.")

@@ -22,12 +22,16 @@
 #This is an example configuration file!
 
 # Select the output writer
-from cached_writer import CachedWriter as Writer
+from writer import Writer
 
 writer = Writer()
 
-#Random seed
+#Random seed:
 seed = 42
+
+#Number of processes:
+#Defines the number of processes to use for simulation, if None, then number of cores will be used.
+processes = None
 
 #input files:
 weather_irradiation = 'input/weather/solarirradiation_twenthe.csv'
